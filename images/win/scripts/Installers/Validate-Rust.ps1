@@ -4,27 +4,23 @@
 ##  Desc:  Verify that Rust is on the path and output version information.
 ################################################################################
 
-$RustPath = "$env:userprofile\.cargo\bin"
-$env:Path = $RustPath + ";" + $env:Path
-$RustcVersion = $(rustc --version)
-
 if (Get-Command -Name 'rustc')
 {
+    $RustcVersion = rustc --version
     Write-Host "$RustcVersion is on the path"
 }
 else
 {
-    Write-Host "rustc is not on the path"
-    
+     Write-Host "rustc is not on the path"
     exit 1
 }
 
-$RustcVersion -Match "\d+\.\d+\.\d+" | out-null
+$RustPath = Split-Path (Get-Command -Name 'rustc').Path
+$RustcVersion -Match "\d+\.\d+\.\d+" | Out-Null
 $Version = $Matches[0]
 
 # Adding description of the software to Markdown
 $SoftwareName = "Rust (64-bit)"
-
 $Description = @"
 #### $Version
 _Location:_ $RustPath

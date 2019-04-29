@@ -6,6 +6,10 @@
 
 Import-Module -Name ImageHelpers
 
+# Rust Env
+$env:RUSTUP_HOME="C:\Rust\.rustup"
+$env:CARGO_HOME="C:\Rust\.cargo"
+
 # Download the latest rustup-init.exe for Windows x64
 # See https://rustup.rs/#
 Invoke-WebRequest -UseBasicParsing -Uri "https://win.rustup.rs/x86_64" -OutFile rustup-init.exe
@@ -17,7 +21,7 @@ Invoke-WebRequest -UseBasicParsing -Uri "https://win.rustup.rs/x86_64" -OutFile 
 rm .\rustup-init.exe
 
 # Add Rust binaries to the path
-Add-MachinePathItem "$env:userprofile\.cargo\bin"
+Add-MachinePathItem "$env:CARGO_HOME\bin"
 $env:Path = Get-MachinePath
 
 # Install common tools
