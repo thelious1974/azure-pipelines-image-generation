@@ -23,8 +23,8 @@ rm .\rustup-init.exe
 # Add Rust binaries to the path
 Add-MachinePathItem "$env:CARGO_HOME\bin"
 $env:Path = Get-MachinePath
-setx RUSTUP_HOME "C:\Rust\.rustup" /M
-setx CARGO_HOME "C:\Rust\.cargo" /M
+setx RUSTUP_HOME $env:RUSTUP_HOME /M
+setx CARGO_HOME $env:CARGO_HOME /M
 
 # Install common tools
 rustup component add rustfmt
