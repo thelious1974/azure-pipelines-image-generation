@@ -7,8 +7,8 @@
 Import-Module -Name ImageHelpers
 
 # Rust Env
-setx RUSTUP_HOME "C:\Rust\.rustup" /M
-setx CARGO_HOME "C:\Rust\.cargo" /M
+$env:RUSTUP_HOME="C:\Rust\.rustup"
+$env:CARGO_HOME="C:\Rust\.cargo"
 
 # Download the latest rustup-init.exe for Windows x64
 # See https://rustup.rs/#
@@ -23,6 +23,8 @@ rm .\rustup-init.exe
 # Add Rust binaries to the path
 Add-MachinePathItem "$env:CARGO_HOME\bin"
 $env:Path = Get-MachinePath
+setx RUSTUP_HOME "C:\Rust\.rustup" /M
+setx CARGO_HOME "C:\Rust\.cargo" /M
 
 # Install common tools
 rustup component add rustfmt

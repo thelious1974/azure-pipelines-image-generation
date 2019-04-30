@@ -26,6 +26,8 @@ $Description = @"
 _Location:_ $RustPath
 _Environment:_
 * PATH: contains the location of rustc.exe
+* RUSTUP_HOME: contains the location of rustup
+* CARGO_HOME: contains the location of cargo
 "@
 
 Add-SoftwareDetailsToMarkdown -SoftwareName $SoftwareName -DescriptionMarkdown $Description
