@@ -7,8 +7,8 @@
 Import-Module -Name ImageHelpers
 
 # Rust Env
-$env:RUSTUP_HOME="C:\Rust\.rustup"
-$env:CARGO_HOME="C:\Rust\.cargo"
+setx RUSTUP_HOME "C:\Rust\.rustup" /M
+setx CARGO_HOME "C:\Rust\.cargo" /M
 
 # Download the latest rustup-init.exe for Windows x64
 # See https://rustup.rs/#
