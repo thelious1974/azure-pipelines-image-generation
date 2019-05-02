@@ -14,7 +14,6 @@ export RUSTUP_HOME=/usr/local/rustup
 export CARGO_HOME=/usr/local/cargo
 
 curl https://sh.rustup.rs -sSf | sh -s -- -y
-chmod +x $CARGO_HOME/bin/cargo
 source $CARGO_HOME/env
 
 echo "RUSTUP_HOME=$RUSTUP_HOME" | tee -a /etc/environment
@@ -26,6 +25,9 @@ rustup component add rustfmt
 rustup component add clippy
 cargo install bindgen
 cargo install cbindgen
+
+chmod -R 0777 $RUSTUP_HOME
+chmod -R 0777 $CARGO_HOME
 
 echo "Test installation of the Rust toochain"
 
