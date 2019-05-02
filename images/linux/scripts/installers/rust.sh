@@ -19,6 +19,7 @@ source $CARGO_HOME/env
 
 echo "RUSTUP_HOME=$RUSTUP_HOME" | tee -a /etc/environment
 echo "CARGO_HOME=$CARGO_HOME" | tee -a /etc/environment
+echo "PATH=$PATH:\"$CARGO_HOME/bin\"" | tee -a /etc/environment
 
 # Install common tools
 rustup component add rustfmt
