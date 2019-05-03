@@ -14,11 +14,12 @@ export RUSTUP_HOME=/usr/local/rustup
 export CARGO_HOME=/usr/local/cargo
 
 curl https://sh.rustup.rs -sSf | sh -s -- -y
-source $CARGO_HOME/env
 
 echo "RUSTUP_HOME=$RUSTUP_HOME" | tee -a /etc/environment
 echo "CARGO_HOME=$CARGO_HOME" | tee -a /etc/environment
 echo "PATH=\"$PATH:$CARGO_HOME/bin\"" | tee -a /etc/environment
+
+source $CARGO_HOME/env
 
 # Install common tools
 rustup component add rustfmt
