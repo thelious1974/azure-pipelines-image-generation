@@ -18,6 +18,9 @@ azcopy --recursive \
        --source https://vstsagenttools.blob.core.windows.net/tools/hostedtoolcache/linux \
        --destination $AGENT_TOOLSDIRECTORY
 
+# Remove Python toolcache folder manually because azcopy doesn't support exclude flag
+rm -rf $AGENT_TOOLSDIRECTORY/Python
+
 # Install tools from hosted tool cache
 original_directory=$PWD
 setups=$(find $AGENT_TOOLSDIRECTORY -name setup.sh)
@@ -26,6 +29,14 @@ for setup in $setups; do
 	cd $(dirname $setup);
 	./$(basename $setup);
 	cd $original_directory;
+done;
+
+echo "Installing npm-toolcache..."
+PYTHON_VERSIONS=( '2.7' '3.4' '3.5' '3.6' '3.7' )
+
+for PYTHON_VERSION in ${PYTHON_VERSIONS[@]}; do
+    echo "Install python-$PYTHON_VERSION"
+    npm install toolcache-python-linux-x64@$PYTHON_VERSION --registry=https://buildcanary.pkgs.visualstudio.com/PipelineCanary/_packaging/hostedtoolcache/npm/registry/
 done;
 
 DocumentInstalledItem "Python (available through the [Use Python Version](https://go.microsoft.com/fwlink/?linkid=871498) task)"
