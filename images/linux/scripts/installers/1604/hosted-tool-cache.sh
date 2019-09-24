@@ -31,6 +31,8 @@ for setup in $setups; do
 	cd $original_directory;
 done;
 
+chmod -R 777 $AGENT_TOOLSDIRECTORY
+
 echo "Installing npm-toolcache..."
 PYTHON_VERSIONS=( '2.7' '3.4' '3.5' '3.6' '3.7' )
 
