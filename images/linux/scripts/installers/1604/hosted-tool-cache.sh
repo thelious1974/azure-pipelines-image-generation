@@ -19,7 +19,7 @@ azcopy --recursive \
        --destination $AGENT_TOOLSDIRECTORY
 
 # Remove Python toolcache folder manually because azcopy doesn't support exclude flag
-rm -rf $AGENT_TOOLSDIRECTORY/Python
+rm -rf $AGENT_TOOLSDIRECTORY/Python/*
 
 # Install tools from hosted tool cache
 original_directory=$PWD
