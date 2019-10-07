@@ -23,7 +23,12 @@
         "install_user": "installer",
         "install_password": "{{env `INSTALL_PASSWORD`}}",
         "capture_name_prefix": "packer",
-        "image_version": "dev"
+        "image_version": "dev",
+
+        "PatToken": "{{env `PAT_TOKEN`}}",
+        "AzureDevopsBaseUrl": "{{env `VstsBaseUrl`}}",
+        "AgentName": "{{env `agentName` }}",
+        "AgentPool": "{{env `agentPool` }}"
     },
     "builders": [
         {
@@ -414,6 +419,12 @@
             ]
         },
         {
+            "type": "powershell",
+            "scripts":[
+                "{{ template_dir }}/scripts/Installers/Install-Packer.ps1"
+            ]
+        },
+        {
             "type": "windows-restart",
             "restart_timeout": "30m"
         },
@@ -582,6 +593,12 @@
             ]
         },
         {
+            "type": "powershell",
+            "scripts":[
+                "{{ template_dir }}/scripts/Installers/Validate-Packer.ps1"
+            ]
+        },
+        {
             "type": "file",
             "source": "C:\\InstalledSoftware.md",
             "destination": "{{ template_dir }}/Vs2017-Server2016-Readme.md",
@@ -601,6 +618,18 @@
             "type": "powershell",
             "scripts":[
                 "{{ template_dir }}/scripts/Installers/Vs2017/Run-Antivirus.ps1"
+            ]
+        },
+        {
+            "type": "powershell",
+            "environment_vars": [
+                "PatToken={{ PatToken }}",
+                "AzureDevopsBaseUrl={{ AzureDevopsBaseUrl }}",
+                "AgentName={{ AgentName }}",
+                "AgentPool={{ AgentPool }}"
+            ],
+            "scripts":[
+                "{{ template_dir }}/scripts/Installers/Install-AzureDevopsAgent.ps1"
             ]
         },
         {
