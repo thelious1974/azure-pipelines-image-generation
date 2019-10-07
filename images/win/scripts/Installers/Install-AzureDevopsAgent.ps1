@@ -84,7 +84,7 @@ Set-Location $buildFolder.FullName
 Write-Output 'Extracted vsts-agent.zip'
 
 $serviceUserQualifiedName = ".\$serviceUserName"
-& .\config.cmd --unattended  --url "`"$VstsBaseUrl`"" --auth pat --token "`"$PatToken`"" --pool "`"$AgentPool`"" --agent "`"$AgentName`"" --runAsService --windowsLogonAccount "`"$serviceUserQualifiedName`"" --windowsLogonPassword "`"$servicePassword`""
+& .\config.cmd --replace --unattended  --url "`"$VstsBaseUrl`"" --auth pat --token "`"$PatToken`"" --pool "`"$AgentPool`"" --agent "`"$AgentName`"" --runAsService --windowsLogonAccount "`"$serviceUserQualifiedName`"" --windowsLogonPassword "`"$servicePassword`""
 Write-Output 'VSTS Build Agent configured.'
 
 Pop-Location
