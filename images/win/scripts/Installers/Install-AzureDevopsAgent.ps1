@@ -11,12 +11,12 @@ $VstsBaseUrl = $env:AzureDevopsBaseUrl
 $AgentName = $env:AgentName
 $AgentPool = $env:AgentPool
 
-Write-Host "-------------------------------------------------"
-Write-Host "Pat Token: $PatToken"
-Write-Host "Azure Devops Url: $VstsBaseUrl"
-Write-Host "Agent Name: $AgentName"
-Write-Host "Agent Pool: $AgentPool"
-Write-Host "-------------------------------------------------"
+Write-Output "-------------------------------------------------"
+Write-Output "Pat Token: $PatToken"
+Write-Output "Azure Devops Url: $VstsBaseUrl"
+Write-Output "Agent Name: $AgentName"
+Write-Output "Agent Pool: $AgentPool"
+Write-Output "-------------------------------------------------"
 
 
 function GetRandomPassword {
@@ -72,7 +72,7 @@ $headers = Get-BasicHeader -Token $PatToken
 
 # Automatically detect Azure DevOps agent download URL
 Write-Output "Searching for Azure DevOps download URL."
-$url = $VstsBaseUrl + '_apis/distributedtask/packages/agent?platform=win-x64'
+$url = $VstsBaseUrl + '/_apis/distributedtask/packages/agent?platform=win-x64'
 $response = Invoke-WebRequest -Uri $url -UseBasicParsing -Headers $headers
 $packages = ConvertFrom-Json -InputObject $response.Content
 $packages = $packages.value | Sort-Object -Property @({ $_.version.major }, { $_.version.minor }, { $_.version.patch }) -Descending
