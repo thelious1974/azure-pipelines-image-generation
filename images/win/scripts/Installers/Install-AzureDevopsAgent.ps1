@@ -11,6 +11,14 @@ $VstsBaseUrl = $env:AzureDevopsBaseUrl
 $AgentName = $env:AgentName
 $AgentPool = $env:AgentPool
 
+Write-Host "-------------------------------------------------"
+Write-Host "Pat Token: $PatToken"
+Write-Host "Azure Devops Url: $VstsBaseUrl"
+Write-Host "Agent Name: $AgentName"
+Write-Host "Agent Pool: $AgentPool"
+Write-Host "-------------------------------------------------"
+
+
 function GetRandomPassword {
     $sourceChars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$^&(){}[],.'
     $max = $sourceChars.Length
@@ -54,7 +62,7 @@ Write-Output 'Created user svcBuild'
 
 Write-Host "Creating build directory"
 
-New-Location -Path "C:\BuildHome" -ItemType Directory
+New-Item -Path "C:\BuildHome" -ItemType Directory
 Push-Location
 Set-Location -Path "C:\BuildHome"
 
@@ -64,7 +72,7 @@ $headers = Get-BasicHeader -Token $PatToken
 
 # Automatically detect Azure DevOps agent download URL
 Write-Output "Searching for Azure DevOps download URL."
-$url = $VstsUrl + '_apis/distributedtask/packages/agent?platform=win-x64'
+$url = $VstsBaseUrl + '_apis/distributedtask/packages/agent?platform=win-x64'
 $response = Invoke-WebRequest -Uri $url -UseBasicParsing -Headers $headers
 $packages = ConvertFrom-Json -InputObject $response.Content
 $packages = $packages.value | Sort-Object -Property @({ $_.version.major }, { $_.version.minor }, { $_.version.patch }) -Descending
@@ -84,7 +92,7 @@ Set-Location $buildFolder.FullName
 Write-Output 'Extracted vsts-agent.zip'
 
 $serviceUserQualifiedName = ".\$serviceUserName"
-& .\config.cmd --replace --unattended  --url "`"$VstsBaseUrl`"" --auth pat --token "`"$PatToken`"" --pool "`"$AgentPool`"" --agent "`"$AgentName`"" --runAsService --windowsLogonAccount "`"$serviceUserQualifiedName`"" --windowsLogonPassword "`"$servicePassword`""
+& "$($buildFolder.FullName)\config.cmd" --replace --unattended  --url "`"$VstsBaseUrl`"" --auth pat --token "`"$PatToken`"" --pool "`"$AgentPool`"" --agent "`"$AgentName`"" --runAsService --windowsLogonAccount "`"$serviceUserQualifiedName`"" --windowsLogonPassword "`"$servicePassword`""
 Write-Output 'VSTS Build Agent configured.'
 
 Pop-Location
