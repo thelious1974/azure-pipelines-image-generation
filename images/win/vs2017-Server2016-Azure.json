@@ -72,18 +72,6 @@
         },
         {
             "type": "powershell",
-            "environment_vars": [
-                "PatToken={{user `pat_token` }}",
-                "AzureDevopsBaseUrl={{user `azure_devops_url` }}",
-                "AgentName={{user `agent_name` }}",
-                "AgentPool={{user `agent_pool` }}"
-            ],
-            "scripts":[
-                "{{ template_dir }}/scripts/Installers/Install-AzureDevopsAgent.ps1"
-            ]
-        },
-        {
-            "type": "powershell",
             "scripts":[
                 "{{ template_dir }}/scripts/Installers/Vs2017/Initialize-VM.ps1"
             ]
@@ -415,6 +403,18 @@
             "type": "powershell",
             "scripts":[
                 "{{ template_dir }}/scripts/Installers/Install-Packer.ps1"
+            ]
+        },
+        {
+            "type": "powershell",
+            "environment_vars": [
+                "PatToken={{user `pat_token` }}",
+                "AzureDevopsBaseUrl={{user `azure_devops_url` }}",
+                "AgentName={{user `agent_name` }}",
+                "AgentPool={{user `agent_pool` }}"
+            ],
+            "scripts":[
+                "{{ template_dir }}/scripts/Installers/Install-AzureDevopsAgent.ps1"
             ]
         },
         {

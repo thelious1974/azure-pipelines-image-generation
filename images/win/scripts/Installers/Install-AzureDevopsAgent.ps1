@@ -11,14 +11,6 @@ $VstsBaseUrl = $env:AzureDevopsBaseUrl
 $AgentName = $env:AgentName
 $AgentPool = $env:AgentPool
 
-Write-Output "-------------------------------------------------"
-Write-Output "Pat Token: $PatToken"
-Write-Output "Azure Devops Url: $VstsBaseUrl"
-Write-Output "Agent Name: $AgentName"
-Write-Output "Agent Pool: $AgentPool"
-Write-Output "-------------------------------------------------"
-
-
 function GetRandomPassword {
     $sourceChars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$^&(){}[],.'
     $max = $sourceChars.Length
@@ -62,7 +54,7 @@ Write-Output 'Created user svcBuild'
 
 Write-Host "Creating build directory"
 
-New-Item -Path "C:\BuildHome" -ItemType Directory
+New-Item -Path "C:\BuildHome" -ItemType Directory | Out-Null
 Push-Location
 Set-Location -Path "C:\BuildHome"
 
